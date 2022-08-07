@@ -24,8 +24,10 @@
 
 #### 环境准备
 Python >= 3.8
+
 第三方库：
 plyer
-
+#### 其他
+码云地址：https://gitee.com/bestdecoy/nnrecorder
 #### 引用
 直播源链接来自项目：https://github.com/wbt5/real-url
