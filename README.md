@@ -1,4 +1,4 @@
-# nnreco4der - 南南录播姬 
+# nnrecorder - 南南录播姬 
 
 #### 介绍
 南南录播姬是一个可以自动录制主流直播的Python脚本。
