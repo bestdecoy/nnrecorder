@@ -10,7 +10,7 @@
 
 #### Config.json 参数说明
 
-|  表头   | 表头  |
+|  参数   | 解释  |
 |  ----  | ----  |
 | ff_ua  | ffmpeg的user-agent |
 | ff_url  | 使用者的ffmpeg地址 |
