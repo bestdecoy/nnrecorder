@@ -18,9 +18,10 @@
 | rc_save_path  | 录制文件存放地址 |
 | slice_size  | 保存的单个文件大小(MB) |
 | auto_record  | 是否自动录制(0 or 1) |
-| gap_time  | 监控间隔时间 |
+| gap_time  | 监控间隔时间(s) |
 | convert_or_not  | 是否自动转码mp4(0 or 1)|
 | remove_ori_flv  | 转码后是否自动删除flv(0 or 1)，不推荐 |
+| alert_space  | 录像保存路径盘符余量警戒值，低于该值停止程序(MB) |
 # 2. 使用
 ## 2.1 环境准备
 1. Python >= 3.8
