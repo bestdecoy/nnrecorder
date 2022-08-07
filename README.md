@@ -23,14 +23,17 @@
 | remove_ori_flv  | 转码后是否自动删除flv(0 or 1)，不推荐 |
 # 2. 使用
 ## 2.1 环境准备
-Python >= 3.8
+1. Python >= 3.8
 
-第三方库：
-plyer
+2. 第三方库：
 
-第三方应用程序：
-ffmpeg：https://github.com/BtbN/FFmpeg-Builds/releases
-* 下载ffmpeg后在config.json中指定ffmpeg地址，参见：1.2.1。
+* plyer
+
+3. 第三方应用程序：
+
+* ffmpeg：https://github.com/BtbN/FFmpeg-Builds/releases
+
+*下载ffmpeg后在config.json中指定ffmpeg地址，参见：1.2.1。
 # 3. 附录
 ## 3.1 其他地址
 码云地址：https://gitee.com/bestdecoy/nnrecorder
