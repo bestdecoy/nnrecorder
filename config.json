@@ -1,0 +1,11 @@
+{
+    "convert_or_not": 1,
+    "ff_ua": "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Mobile Safari/537.36",
+    "ff_url": "F:/ffmpeg/bin/ffmpeg.exe",
+    "rc_save_path": "F:/test/",
+    "remove_ori_flv": 1,
+    "rid": "123321, dank1ng, 610732, fancysummer, mrmao1992",
+    "slice_size": "15",
+    "auto_record": 1,
+    "gap_time": 3
+}
