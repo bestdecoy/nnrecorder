@@ -32,7 +32,7 @@ plyer
 ffmpeg：https://github.com/BtbN/FFmpeg-Builds/releases
 * 下载ffmpeg后在config.json中指定ffmpeg地址，参见：1.2.1。
 # 3. 附录
-##3.1 其他地址
+## 3.1 其他地址
 码云地址：https://gitee.com/bestdecoy/nnrecorder
 ## 3.2 引用
 直播源链接来自项目：https://github.com/wbt5/real-url
