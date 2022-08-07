@@ -7,5 +7,6 @@
     "rid": "123321, dank1ng, 610732, fancysummer, mrmao1992",
     "slice_size": "15",
     "auto_record": 1,
-    "gap_time": 3
+    "gap_time": 3,
+    "alert_space": 5000 
 }

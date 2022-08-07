@@ -5,6 +5,7 @@ from numpy import record
 import plyer
 import platform
 import ctypes
+import sys
 from sklearn import get_config
 import huya
 from recorder import *

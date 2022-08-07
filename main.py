@@ -31,7 +31,11 @@ class menu():
 
         os.system("cls")
         print("\r-> 以下是当前记录的直播间的开播情况：")
-        print("\r# 在程序根目录下的config.json中的项rid修改直播间列表。\n")
+        print("\r# 在程序根目录下的config.json中的项rid修改直播间列表。")
+        print("\r# 当前盘符{}的剩余容量为：{:.1f}MB，低于{}MB将会停止程序。\n".format((self.config["rc_save_path"][0]+":"),
+                                                                                check_remain_space(self.config["rc_save_path"]),
+                                                                                self.config["alert_space"]
+                                                                            ))
         i = 0
         for i in range(len(self.rids)):
             live_info = check_info(self.rids[i])
@@ -73,7 +77,7 @@ class menu():
         # 判断live_i是否合法：
 
         for i in live_i:
-            cmd = """monitor_{} = monitor(self.rids[{}], self.config["gap_time"]);monitor_{}.daemon = False;monitor_{}.start()""".format(self.rids[i], i, self.rids[i], self.rids[i])
+            cmd = """monitor_{} = monitor(self.rids[{}], self.config["gap_time"]);monitor_{}.daemon = True;monitor_{}.start()""".format(self.rids[i], i, self.rids[i], self.rids[i])
             exec(cmd)
         # self.live_stat_rec()
         time.sleep(1)
@@ -84,6 +88,10 @@ class menu():
             os.system("cls")
             print("\r-> 以下是当前记录的直播间的开播情况：")
             print("\r# 在程序根目录下的config.json中的项rid修改直播间列表。\n")
+            print("\r# 当前盘符{}的剩余容量为：{:.1f}MB，低于{}MB将会停止程序。\n".format((self.config["rc_save_path"][0]+":"),
+                                                                                check_remain_space(self.config["rc_save_path"]),
+                                                                                self.config["alert_space"]
+                                                                            ))
             i = 0
             for i in range(len(self.rids)):
                 if i_2 <= len(self.rids):

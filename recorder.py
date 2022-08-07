@@ -3,9 +3,11 @@ import time
 import huya
 import re
 import os
-import sys
+import platform
 import threading
 import convert
+import sys
+import plyer
 import ctypes
 from config import load_conf
 from threading import Thread
@@ -31,6 +33,17 @@ def check_ff():
               '\r2. 参考做法：在config.json的键"ff_url"记录为"F:/ffmpeg/bin/ffmpeg.exe"，将ffmpeg.exe放入"F:/ffmpeg/bin/"。\n',
               '\n\r# 下载地址：https://github.com/BtbN/FFmpeg-Builds/releases 或 https://ffmpeg.org/download.html\n')
     return ff_code
+
+# 检查磁盘余量
+def check_remain_space(path):
+    path = path[0] + ":"
+    if platform.system() == 'Windows':
+        free_bytes = ctypes.c_ulonglong(0)
+        ctypes.windll.kernel32.GetDiskFreeSpaceExW(ctypes.c_wchar_p(path), None, None, ctypes.pointer(free_bytes))
+        return free_bytes.value / 1024 / 1024  # 返回MB
+    else:
+        st = os.statvfs(path)
+        return st.f_bavail * st.f_frsize / 1024 / 1024
 
 class recorder(threading.Thread):
 
@@ -168,6 +181,15 @@ class recorder(threading.Thread):
                     self.rec_info = [""]  # 清零缓冲区
                     # self.kill_sub_ff(ffmpeger.pid) # 杀ffmpeg
                     break
+                if (check_remain_space(self.config["rc_save_path"]) < self.config["alert_space"]):
+                    if(platform.system()=='Windows'):
+                        plyer.notification.notify(title="录制姬",message="存储空间不足，请清理空间后再录制。".format(live_info[2]),
+                    # app_icon="tubiao.ico",
+                    timeout=1)
+                    time.sleep(10)
+                    sys.exit(0)
+
+            
 
             try:
                 ffmpeger.wait(2)
