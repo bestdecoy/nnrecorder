@@ -6,12 +6,11 @@ import os
 import sys
 from threading import Thread
 # private lib
-import huya
+from modules.huya import *
 import shutil
-from recorder import *
-from config import *
-from console import *
-from monitor import *
+from modules.recorder import *
+from modules.config import *
+from modules.monitor import *
 
 
 class menu():
@@ -20,6 +19,7 @@ class menu():
         self.config = load_conf(self.config)  # copy config.json to config
         self.rids = mult_rids(self.config["rid"])
         self.sel_rids = []  # 用户选中的直播间号
+        self.live_thread = []  # 直播进程写入
 
     def live_stat(self):
         # print("\r# 此时的直播间参数为：\n")
@@ -69,18 +69,19 @@ class menu():
     #         time.sleep(30)
         
     def select_live(self):
-        live_i = input("\n\r-> 输入序号选择直播间进行录播/监控。\n")
+        live_i = input("\n\r-> 输入序号选择直播间进行录播/监控，多个任务用英文逗号隔开。\n")
         live_i = live_i.replace(" ", "").split(",")
         live_i = [(int(i)-1) for i in live_i]  # 将多个输入变成整型-1的index
         self.sel_rids = [self.rids[i] for i in live_i]  # 储存监控的直播间id
 
         # 判断live_i是否合法：
 
-        for i in live_i:
-            cmd = """monitor_{} = monitor(self.rids[{}], self.config["gap_time"]);monitor_{}.daemon = True;monitor_{}.start()""".format(self.rids[i], i, self.rids[i], self.rids[i])
-            exec(cmd)
+        self.live_thread = [monitor(self.rids[i], self.config["gap_time"]) for i in live_i]
+        for i in self.live_thread:
+            i.daemon = True
+            i.start()
+    
         # self.live_stat_rec()
-        time.sleep(1)
 
         i_2 = 0
         live_info_temp = []
@@ -180,7 +181,7 @@ def main():
     # else:
     #     print('\r-> 不修改房间号，此时的"rid"："{}"\n'.format(config["rid"]))
     
-    # live_code = huya.get_real_url(config["rid"])
+    # live_code = get_real_url(config["rid"])
 
     # time.sleep(2)
     # live_stat_str = ['未开播','正在直播']
@@ -206,7 +207,7 @@ def main():
     # monitor_head.join()
 
 
-    # live_code = huya.get_real_url(config["rid"])  # 直播后，重新获取直播间信息
+    # live_code = get_real_url(config["rid"])  # 直播后，重新获取直播间信息
 
     # if config["auto_record"] ==1 and live_stat ==0:  # 此时live_stat保存的是第一次检查直播状态的信息，不是当下
     #     print("\r-> 自动录制已开启。")
@@ -247,11 +248,13 @@ if __name__ == "__main__":
         os.mkdir(os.getcwd() + "/temp")
     except:
         pass
+
     tasklist = subprocess.Popen("tasklist", stdout=subprocess.PIPE, shell=True)
     pid = tasklist.stdout.read().decode("ansi")
     pid = re.findall("ffmpeg.exe([\s\S]*?) Co",pid)
     pid = [i.replace(" ", "") for i in pid]
     tasklist.kill()
+
     f = open((os.getcwd()+'/ffmpeg_pid.log'), 'w')
     for i in pid:
         f.write(i+'\n')

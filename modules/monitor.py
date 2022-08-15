@@ -6,22 +6,21 @@ import plyer
 import platform
 import ctypes
 import sys
-from sklearn import get_config
-import huya
-from recorder import *
-from config import *
+from modules.huya import *
+from modules.recorder import *
+from modules.config import *
 
 # 判断是否网络超时，尝试五次，超时退出程序。
 def check_info(rid):
     i = 0
     while(1):
-        live_info = huya.get_real_url(rid)
+        live_info = get_real_url(rid)
         if live_info[0]==0 and live_info[1]==0 and live_info[2]==0:
             # 重试
             for i in range(20):   
                 i += 1
                 print("\033[0;31;40m", '\r-> 网络连接失败，正在重试第{}次。'.format(i), "\033[0m") 
-                live_info = huya.get_real_url(rid)
+                live_info = get_real_url(rid)
                 if not (live_info[0]==0 and live_info[1]==0 and live_info[2]==0):
                     return live_info
                 time.sleep(2)
@@ -64,7 +63,7 @@ class monitor(threading.Thread):
 
     def stop_thread(self): 
         thread_id = self.get_id() 
-        live_info = huya.get_real_url(self.rid)
+        live_info = get_real_url(self.rid)
         res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 
 			ctypes.py_object(SystemExit))
         print("\n\033[0;31;40m", '\r-> 用户终止，停止监控【{}】。'.format(live_info[2]), "\033[0m", end="\n\n") 
@@ -106,7 +105,7 @@ class monitor(threading.Thread):
                             print("\033[0;31;40m", '\r-> 用户终止，停止录制【{}】。'.format(live_info[2]), "\033[0m", end="\n\n")
                             
                             # thread_id = self.get_id() 
-                            # live_info = huya.get_real_url(self.rid)
+                            # live_info = get_real_url(self.rid)
                             # res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 
 	                        #             ctypes.py_object(SystemExit))
                             # print("\033[0;31;40m", '\r-> 用户终止，停止录制【{}】。'.format(live_info[2]), "\033[0m", end="\n\n") 

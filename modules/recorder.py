@@ -1,15 +1,15 @@
 import subprocess
 import time
-import huya
+from modules.huya import *
 import re
 import os
 import platform
 import threading
-import convert
+from modules.convert import *
 import sys
 import plyer
 import ctypes
-from config import load_conf
+from modules.config import load_conf
 from threading import Thread
 
 
@@ -95,7 +95,7 @@ class recorder(threading.Thread):
     # https://zhuanlan.zhihu.com/p/142781154
     def stop_thread(self): 
         thread_id = self.get_id() 
-        live_info = huya.get_real_url(self.rid)
+        live_info = get_real_url(self.rid)
         res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 
 			ctypes.py_object(SystemExit))
         print("\033[0;31;40m", '\r-> 用户终止录制线程，停止录制【{}】。'.format(live_info[2]), "\033[0m", end="\n\n") 
@@ -117,7 +117,7 @@ class recorder(threading.Thread):
 
         # taskkill /IM "ProcessName.exe" /F
         while(1):
-            ff_record_url, liveTitle, liveName = huya.get_real_url(self.rid)
+            ff_record_url, liveTitle, liveName = get_real_url(self.rid)
             if ff_record_url ==0 :
                 print("\033[0;31;40m", '\r-> 主播已下播，停止录制。', "\033[0m", end="\n\n")
                 self.stop_thread()  # 下播停止线程
@@ -203,7 +203,7 @@ class recorder(threading.Thread):
 
             # flv转mp4线程
             if config["convert_or_not"] == 1:
-                convert_thread = Thread(target=convert.flv2mp4, 
+                convert_thread = Thread(target=flv2mp4, 
                                         args=(ffmpeger, 
                                         ff_save_file_name, 
                                         log_path))
