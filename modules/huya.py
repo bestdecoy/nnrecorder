@@ -42,7 +42,7 @@ def get_real_url(room_id):
                           'Chrome/75.0.3770.100 Mobile Safari/537.36 '
         }
         response = requests.get(url=room_url, headers=header).text
-        liveTitle = re.findall(r'"sRoomName":"([\s\S]*?)",', response)[0].replace(' ', '')
+        liveTitle = re.findall(r'"sIntroduction":"([\s\S]*?)",', response)[0].replace(' ', '')
         liveName = re.findall(r'<title>([\s\S]*?)直播', response)[0].replace(' ', '')  # 获取直播间信息
         liveLineUrl = re.findall(r'"liveLineUrl":"([\s\S]*?)",', response)[0]
         liveline = base64.b64decode(liveLineUrl).decode('utf-8')

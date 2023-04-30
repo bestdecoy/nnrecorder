@@ -6,7 +6,7 @@
 目前尚在开发中，仅支持Huya，未来增添更多直播平台以及GUI版。
 
 ## 1.1 使用截图
-![使用截图](https://pic.rmb.bdstatic.com/bjh/f490e4c21123c2c7ee8b272016706d2f.png)
+![使用截图](https://s1.ax1x.com/2023/04/30/p93vkcQ.png)
 ## 1.2 相关文件介绍
 ### 1.2.1 Config.json 参数说明
 本脚本通过修改根目录下config.json不同键的值实现各项功能，功能如下：
